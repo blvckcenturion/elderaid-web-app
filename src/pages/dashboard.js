@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import { useUser } from '@/utils/useUser';
 import Loader from '@/components/Loader';
 import CampaignManager from '@/components/campaign/CampaignManager';
+import DonationTableComponent from '@/components/donations/DonationTableComponent';
 
 export default function Dashboard() {
     const router = useRouter()
@@ -53,7 +54,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex-grow p-4">
                     {selectedOption === 'Campaigns' && <CampaignManager/>}
-                    {selectedOption === 'Donations' && <div>Donations content here</div>}
+                    {selectedOption === 'Donations' && <DonationTableComponent/>}
                 </div>
             </div>
         );

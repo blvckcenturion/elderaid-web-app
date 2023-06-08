@@ -18,12 +18,14 @@ model Institution {
   main_representative String
   email             String      @unique
   phone             String
+  cellphone         String?
   address           String
   lat               Float?
   lng               Float?
   password          String
   image_url         String
   Campaigns         Campaign[]
+  Donations         Donation[]
 
   @@index([name])
 }
@@ -56,15 +58,34 @@ model CampaignImage {
 model Donation {
   id             Int        @id @default(autoincrement())
   campaign_id    Int
-  benefactor_id  String
+  institution_id Int
+  benefactor_id  Int
   description    String
   quantity       Int
   donation_date  DateTime
   status         DonationStatus
+  anonymous      Boolean      @default(false)
+  firebase_id    String
   Campaign       Campaign  @relation(fields: [campaign_id], references: [id])
+  Institution    Institution @relation(fields: [institution_id], references: [id])
+  Benefactor     Benefactor  @relation(fields: [benefactor_id], references: [id])
 
   @@index([benefactor_id, status])
   @@index([campaign_id])
+}
+
+model Benefactor {
+  id            Int        @id @default(autoincrement())
+  name          String
+  CI            String     @unique
+  lat           Float?
+  lng           Float?
+  phone         String
+  email         String     @unique
+  firebase_id   String
+  Donations     Donation[]
+
+  @@index([name])
 }
 
 enum DonationStatus {

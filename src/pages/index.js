@@ -88,7 +88,7 @@ export default function HomePage() {
                   <div className='my-2 border-b border-primary'>
                       <CampaignSlider CampaignImages={selectedCampaign.CampaignImages} />
                   </div>
-                  <div className="card-body flex flex-col md:flex-row justify-between">
+                  <div className="card-body flex flex-col md:flex-row justify-between border-b">
                       <div className="w-full md:w-1/2">
                           <h2 className="text-xl font-bold mb-2">Campaign Details</h2>
                           <p className="mb-2">
@@ -117,14 +117,39 @@ export default function HomePage() {
                               <p className="mb-2"><strong>Name:</strong> {selectedCampaign.Institution.name}</p>
                               <p className="mb-2"><strong>Representative:</strong> {selectedCampaign.Institution.main_representative}</p>
                               <p className="mb-2"><strong>Phone:</strong> {selectedCampaign.Institution.phone}</p>
+                              <p className="mb-2"><strong>Cellphone:</strong> {selectedCampaign.Institution.cellphone}</p>
                               <p className="mb-2"><strong>Address:</strong> {selectedCampaign.Institution.address}</p>
                           </div>
                       </div>
                       <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-4">
                               <MapWithNoSSR lat={selectedCampaign.Institution.lat} lng={selectedCampaign.Institution.lng} />
-                        
                       </div>
                   </div>
+                  {campaignType === 'closed' && (
+                        <div className="card-body">
+                            <h2 className="text-xl font-bold mb-2">Donation Details</h2>
+                            <div className="border-2 border-primary shadow-lg p-4 bg-base-100 rounded">
+                            <table className="table w-full">
+                                <thead className="bg-secondary text-base-100">
+                                <tr>
+                                    <th className="p-2">Benefactor</th>
+                                    <th className="p-2">Status</th>
+                                    <th className="p-2">Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {selectedCampaign.Donations.map((donation, index) => (
+                                    <tr key={index} className="text-info">
+                                    <td className="p-2">{donation.anonymous ? 'Anonymous Donation' : donation.Benefactor.name}</td>
+                                    <td className="p-2">{donation.status === 'received' ? 'Received' : 'Not Received'}</td>
+                                    <td className="p-2">{new Date(donation.donation_date).toLocaleDateString()}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        )}
               </div>
           </div>
       );

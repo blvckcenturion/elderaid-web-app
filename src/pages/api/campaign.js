@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import { db } from "@/utils/firebase";
@@ -95,8 +94,16 @@ export default async function handler(req, res) {
                 } else {
                     // Fetch all campaigns
                     const campaigns = await prisma.campaign.findMany({
-                        include: { CampaignImages: true, Institution: true }
-                    });
+                        include: { 
+                          CampaignImages: true, 
+                          Institution: true, 
+                          Donations: {
+                            include: {
+                              Benefactor: true
+                            }
+                          }
+                        }
+                      });
                     res.status(200).json(campaigns);
                 }
             } catch (error) {

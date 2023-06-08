@@ -17,7 +17,7 @@ const CampaignSlider = ({ CampaignImages }) => {
 
     return (
         <div className="flex flex-col items-center justify-center overflow-hidden">
-            <div className="flex w-full h-[25vh] overflow-hidden relative">
+            <div className="flex w-full h-[30vh] overflow-hidden relative">
                 {CampaignImages.map((image, index) => (
                     <div 
                         key={image.id}

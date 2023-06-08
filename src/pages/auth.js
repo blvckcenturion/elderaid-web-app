@@ -38,6 +38,7 @@ export default function Auth() {
         email: Yup.string().email('Invalid email').required('Required'),
         phone: Yup.string().required('Required'),
         address: Yup.string().required('Required'),
+        cellphone: Yup.string().required('Required'),
         lat: Yup.number().optional('Required'),
         lng: Yup.number().optional('Required'),
         password: Yup.string().required('Required'),
@@ -159,6 +160,7 @@ export default function Auth() {
                                     main_representative: '',
                                     email: '',
                                     phone: '',
+                                    cellphone:'',
                                     address: '',
                                     lat: 0,
                                     lng: 0,
@@ -184,6 +186,9 @@ export default function Auth() {
                                         <label htmlFor="phone" className="text-primary-text-color mt-4 mb-1">Phone</label>
                                         <Field name="phone" type="text" className={`input py-2 input-bordered ${errors.phone && touched.phone && 'input-error'}`} />
                                         <ErrorMessage name="phone" component="div" className="text-primary-text-color" />
+                                        <label htmlFor="cellphone" className="text-primary-text-color mt-4 mb-1">Cellphone</label>
+                                        <Field name="cellphone" type="text" className={`input py-2 input-bordered ${errors.cellphone && touched.cellphone && 'input-error'}`} />
+                                        <ErrorMessage name="cellphone" component="div" className="text-primary-text-color" />    
                                         <label htmlFor="address" className="text-primary-text-color mt-4 mb-1">Address</label>
                                         <Field name="address" type="text" className={`input py-2 input-bordered ${errors.address && touched.address && 'input-error'}`} />
                                         <ErrorMessage name="address" component="div" className="text-primary-text-color" />

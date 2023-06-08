@@ -32,6 +32,7 @@ export default async function handler(req, res) {
                     main_representative: Joi.string().required(),    
                     email: Joi.string().email().required(),
                     phone: Joi.string().required(),
+                    cellphone: Joi.string().required(),
                     address: Joi.string().required(),
                     lat: Joi.number().required(),
                     lng: Joi.number().required(),
@@ -43,7 +44,7 @@ export default async function handler(req, res) {
                 console.log(error)
                 if (error) throw error;
 
-                const { name, email, password, NIT, main_representative, phone, address, lat, lng, image_url } = req.body;
+                const { name, email, password, NIT, main_representative, phone, address, lat, lng, image_url, cellphone } = req.body;
 
                 // Check if user already exists
                 const existingUser = await prisma.institution.findUnique({ where: { email } });
@@ -61,6 +62,7 @@ export default async function handler(req, res) {
                         main_representative,
                         phone,
                         address,
+                        cellphone,
                         lat,
                         lng,
                         image_url
@@ -78,6 +80,7 @@ export default async function handler(req, res) {
                     address: newUser.address,
                     lat: newUser.lat,
                     lng: newUser.lng,
+                    cellphone: newUser.cellphone,
                     image_url: newUser.image_url,
                     id: newUser.id
                 });

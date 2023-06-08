@@ -96,8 +96,13 @@ const CampaignForm = ({ campaign, onBack }) => {
                <ErrorMessage name="requirement" component="div" className="text-primary-text-color" />
             </div> 
             <div className="form-control">
-              <label className="text-primary-text-color mt-4 mb-1" htmlFor="beneficiary_type">Benefeciary Type</label>
-              <Field className={`input py-2 input-bordered ${errors.beneficiary_type && touched.beneficiary_type && 'input-error'}`} type="text" id="beneficiary_type" name="beneficiary_type" placeholder="Campaign Benefeciary Type" />
+              <label className="text-primary-text-color mt-4 mb-1" htmlFor="beneficiary_type">Beneficiary Type</label>
+              <Field as="select" className={`input py-2 input-bordered ${errors.beneficiary_type && touched.beneficiary_type && 'input-error'}`} id="beneficiary_type" name="beneficiary_type">
+                <option value="">Select Beneficiary Type</option>
+                <option value="Elder person">Elder person</option>
+                <option value="Group of elder people">Group of elder people</option>
+                <option value="Entire institution">Entire institution</option>
+              </Field>
               <ErrorMessage name="beneficiary_type" component="div" className="text-primary-text-color" />
             </div>
           
