@@ -26,7 +26,7 @@ const DonationTableComponent = () => {
     const [selectedDonation, setSelectedDonation] = useState(null);
   const { user } = useUser();
   
-  const fetchDonations = () => {
+  const fetchDonations = async () => {
     setDonations([]);
     setIsLoading(true);
   
@@ -86,7 +86,8 @@ const DonationTableComponent = () => {
       });
       if (!response.ok) throw new Error(response.statusText);
       setModalOpen(false);
-      fetchDonations();
+      setSelectedDonation(null);
+      await fetchDonations();
     } catch (error) {
       console.error('Failed to mark donation for pick up:', error);
     } finally {
@@ -102,9 +103,10 @@ const DonationTableComponent = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ donationId: selectedDonation.id, status: 'received' }),
       });
-      if (!response.ok) throw new Error(response.statusText);
       setModalOpen(false);
-      fetchDonations();
+      setSelectedDonation(null);
+      if (!response.ok) throw new Error(response.statusText);
+      await fetchDonations();
     } catch (error) {
       console.error('Failed to mark donation as collected:', error);
     } finally {

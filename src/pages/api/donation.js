@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
 import { db } from "@/utils/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc, } from "firebase/firestore";
 
 const prisma = new PrismaClient();
 
@@ -35,17 +35,25 @@ export default async function handler(req, res) {
             try {
                 const { donationId, status } = req.body;
                 if (!donationId || !status) throw new Error("Missing donationId or status in request");
-
+            
                 // Ensure the status is one of the accepted values
                 if (!["to_collect", "on_the_way", "received"].includes(status)) {
                     throw new Error("Invalid status in request");
                 }
-
+            
                 const donation = await prisma.donation.update({
                     where: { id: Number(donationId) },
                     data: { status: status }
                 });
 
+                console.log(donation)
+            
+                // Also update the status in Firestore
+                const donationDoc = doc(db, "donations", donation.firebase_id.toString());
+                await updateDoc(donationDoc, {
+                  status: status
+                });            
+            
                 res.status(200).json(donation);
             } catch (error) {
                 res.status(400).json({ error: error.message });

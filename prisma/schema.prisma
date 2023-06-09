@@ -82,7 +82,7 @@ model Benefactor {
   lng           Float?
   phone         String
   email         String     @unique
-  firebase_id   String
+  firebase_id   String    
   Donations     Donation[]
 
   @@index([name])
